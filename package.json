@@ -1,0 +1,10 @@
+{
+  "name": "Caculator",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Trung Hieu",
+  "license": "MIT",
+  "scripts": {
+    "start": "python main.py"
+  }
+}

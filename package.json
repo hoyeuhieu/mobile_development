@@ -5,6 +5,6 @@
   "author": "Trung Hieu",
   "license": "MIT",
   "scripts": {
-    "start": "python main.py"
+    "start": "python src/caculator/main.py"
   }
 }

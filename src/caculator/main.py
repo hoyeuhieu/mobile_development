@@ -1,73 +1,145 @@
+from constants import *
 from tkinter import *
+import math
+expressions = []
+index = 0
+
 window = Tk()
 window.title('My Caculator')
-buttons = [['2nd', 'Pi', 'e', 'C', "X"], ['x^2', '1/x', '|x|', 'exp', 'mod'], ['abs', '(',')', 'n!', '/'], ['x^y', '7', '8', '9', 'x'], ['10^x', '4', '5', '6', '-'], ['log', '1', '2', '3', '+'], ['ln', '+/-', '0', '.', '=']]
 finish = False
+buttons = [
+    ['2nd', 'pi', 'e', 'C', "X"],
+    ['^2', '1/x', 'abs', 'exp', 'mod'],
+    ['abs', '(', ')', 'n!', '/'],
+    ['x^y', '7', '8', '9', 'x'],
+    ['10^x', '4', '5', '6', '-'],
+    ['log', '1', '2', '3', '+'],
+    ['ln', '+/-', '0', '.', '=']]
+
+
+def transform(str, current, old, new):
+    if(new == null or old == null or new == "" or old == ""):
+        return str + current
+    if(current == old):
+        return str + new
+    else:
+        return str + current
+
+
+def insertExpressions(ch):
+    global expressions
+    global index
+    expressions.insert(index, ch)
+    index += 1
+    show_display(ch)
+
+
 def on_btn_clicked(ch):
     return lambda: on_click(ch)
+
+
+def remove_display():
+    global index
+    if index != 0:
+        display.delete(index - 1, index)
+    else:
+        display.delete(0, END)
+        display.insert(0, 0)
+
+
+def show_display(ch):
+    global index
+    global expressions
+    if(index == 1):
+        display.delete(0, END)
+        display.insert(index, ch)
+    else:
+        display.insert(index, ch)
+    print(expressions)
+
+
+def clear_all():
+    global expressions
+    global index
+    expressions = []
+    index = 0
+    display.delete(0, END)
+    display.insert(0, 0)
+
+
 def on_click(ch):
     global finish
     if ch == 'C':
         on_btn_clear_clicked()
     elif ch == '=':
         on_btn_equal_clicked()
-    elif ch == '%':
-        on_btn_percent_clicked()
+    elif ch == 'X':
+        clear_all()
     else:
-        res = display.get()
-        if (len(display.get()) == 1 and display.get() == '0' and not ch in '+-*/^') or \
-                (not display.get() == 'ERROR' and finish == 1 and ch not in '+-*/^') or display.get() == 'ERROR':
-            display.delete(0, END)
-        if res == 'ERROR':
-            if ch not in '+-*/^':
-                display.insert(len(display.get()), ch)
-                finish = False
-            else:
-                display.insert(len(display.get()), '0')
-        else:
-            display.insert(len(display.get()), ch)
-            finish = False
+        insertExpressions(ch)
+
+
 def on_btn_clear_clicked():
     global finish
-    if finish:
-        display.delete(0, END)
-        display.insert(0, 0)
-    else:
-        display.delete(len(display.get()) - 1)
+    global expressions
+    global index
+    print(index)
+    if(index != 0):
+        expressions.pop(index - 1)
+        index -= 1
+        remove_display()
+
+
 def on_btn_equal_clicked():
     global finish
+    global expressions
+
     try:
-        text = display.get()
-        print(text)
-        label.config(text = text, justify= 'right')
-        true_number_sentance = text.replace('^', '**')
-        res = eval(true_number_sentance)
+        temp = ""
+        str_expressions = ""
+        temp_array = []
+        for variable in default_variables:
+            for i in expressions:
+                i_temp = ""
+                if(i == variable.name):
+                    i_temp = variable.value
+                else:
+                    i_temp = i
+
+                temp += i_temp
+                temp_array.append(i)
+            str_expressions += i
+
+        print(temp)
+        print(temp_array)
+        text = str_expressions
+        label.config(text=text, justify='right')
+        res = eval(temp)
     except Exception:
         res = 'ERROR'
     display.delete(0, END)
     display.insert(0, res)
     finish = True
-def on_btn_percent_clicked():
-    global finish
-    res = float(display.get()) / 100
-    display.delete(0, END)
-    display.insert(0, res)
-    finish = True
+
+
 def defind_buttons(buttons):
     row_d = 1
     for i in range(len(buttons)):
         column_d = 0
         for j in (buttons[i]):
-            btn = Button(window, text = j, font = ('Tahoma', 20), command = on_btn_clicked(j))
-            btn.grid(row=row_d + 1, column=column_d, sticky = 'nesw', padx = 5, pady = 5)
+            btn = Button(window, text=j, font=(
+                'Tahoma', 20), command=on_btn_clicked(j))
+            btn.grid(row=row_d + 1, column=column_d,
+                     sticky='nesw', padx=5, pady=5)
             column_d += 1
         row_d += 1
 
 
-display = Entry(window, font = ('Tahoma', 20), width = 30, justify = 'right')
-display.grid(row = 1, column = 0, columnspan=5, padx = 5, pady = 5)
-label = Label(window, font = ('Tahoma', 20), width = 30, anchor='e', fg='gray')
-label.grid(row = 0, column = 0, columnspan=5, padx = 5, pady = 5)
+display = Entry(window, font=('Tahoma', 20), width=30, justify='right')
+display.grid(row=1, column=0, columnspan=5, padx=5, pady=5)
+display.insert(0, 0)
+label = Label(window, font=('Tahoma', 20), width=30, anchor='e', fg='gray')
+label.grid(row=0, column=0, columnspan=5, padx=5, pady=5)
 defind_buttons(buttons)
 
 window.mainloop()

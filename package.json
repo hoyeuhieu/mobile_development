@@ -5,6 +5,7 @@
   "author": "Trung Hieu",
   "license": "MIT",
   "scripts": {
-    "start": "python src/caculator/main.py"
+    "start": "python src/caculator/main.py",
+    "ball": "python src/canvas/ball.py"
   }
 }

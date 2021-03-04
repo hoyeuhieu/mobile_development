@@ -6,4 +6,5 @@ class variable:
 
 default_variables = []
 default_variables.append(variable('x', '*'))
-default_variables.append(variable('abs', 'math.abs'))
+default_variables.append(variable('sqrt', 'math.sqrt'))
+default_variables.append(variable('mod', '%'))

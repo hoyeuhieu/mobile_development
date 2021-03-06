@@ -8,7 +8,7 @@ window = Tk()
 window.title('My Caculator')
 finish = False
 buttons = [
-    ['2nd', 'pi', 'e', 'C', "X"],
+    ['2\u207f\u1d48', 'pi', 'e', 'C', "X"],
     ['^2', '1/x', 'abs', 'exp', 'mod'],
     ['sqrt', '(', ')', 'n!', '/'],
     ['x^y', '7', '8', '9', 'x'],

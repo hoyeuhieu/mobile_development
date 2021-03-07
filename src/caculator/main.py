@@ -1,6 +1,7 @@
 from constants import *
 from tkinter import *
 import math
+import numpy as np
 expressions = []
 index = 0
 
@@ -8,11 +9,11 @@ window = Tk()
 window.title('My Caculator')
 finish = False
 buttons = [
-    ['2\u207f\u1d48', 'pi', 'e', 'C', "X"],
-    ['^2', '1/x', 'abs', 'exp', 'mod'],
-    ['sqrt', '(', ')', 'n!', '/'],
-    ['x^y', '7', '8', '9', 'x'],
-    ['10^x', '4', '5', '6', '-'],
+    ['2\u207f\u1d48', 'π', 'e', 'C', "X"],
+    ['^2', '1/', 'ABS', 'EXP', 'MOD'],
+    ['SQRT', '(', ')', 'N!', '/'],
+    ['^', '7', '8', '9', '*'],
+    ['10^', '4', '5', '6', '-'],
     ['log', '1', '2', '3', '+'],
     ['ln', '+/-', '0', '.', '=']]
 
@@ -42,6 +43,7 @@ def show_display():
     global expressions
     for i in range(len(expressions)):
         display.insert(i, expressions[i])
+
 
 def remove_display():
     global index
@@ -117,47 +119,20 @@ def on_btn_equal_clicked():
             else:
                 temp = str_expressions
 
-        text = str_expressions
+        # Test
+
+
+        print(temp)
+        text = str_expressions  # Show in label above the input
         label.config(text=text, justify='right')
         res = eval(temp)
-
+        expressions = []
+        expressions.append(str(res))
     except Exception:
         res = 'ERROR'
     display.delete(0, END)
     display.insert(0, res)
     finish = True
-
-
-# def on_btn_equal_clicked():
-#     global finish
-#     global expressions
-
-#     try:
-#         temp = ""
-#         str_expressions = ""
-#         temp_array = []
-#         for variable in default_variables:
-#             for i in expressions:
-#                 i_temp = ""
-#                 if(i == variable.name):
-#                     i_temp = variable.value
-#                 else:
-#                     i_temp = i
-
-#                 temp += i_temp
-#                 temp_array.append(i)
-#             str_expressions += i
-
-#         print(temp)
-#         print(temp_array)
-#         text = str_expressions
-#         label.config(text=text, justify='right')
-#         res = eval(temp)
-#     except Exception:
-#         res = 'ERROR'
-#     display.delete(0, END)
-#     display.insert(0, res)
-#     finish = True
 
 
 def defind_buttons(buttons):
